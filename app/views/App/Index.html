@@ -1,0 +1,21 @@
+{{set . "title" "YouTube to Koofr"}}
+{{template "header.html" .}}
+
+<div class="container" style="margin-top: 30px;">
+<h2>YouTube to Koofr</h2>
+
+{{if .me}}
+<h4>{{.me.name}}</h4>
+
+<form class="form-inline" action="/App/Convert">
+  <div class="form-group">
+    <input type="url" name="url" class="form-control" placeholder="YouTube URL" style="width: 400px">
+  </div>
+  <button type="submit" class="btn btn-primary">MP3 to Koofr</button>
+</form>
+{{else}}
+<a href="{{.authUrl}}" class="btn btn-primary">Login with Koofr</a>
+{{end}}
+</div>
+
+{{template "footer.html" .}}
