@@ -7,7 +7,7 @@ RUN apt-get update
 RUN apt-get install -y python2.7 libav-tools curl libavcodec-extra-53 git
 RUN ln -s /usr/bin/python2.7 /usr/bin/python
 RUN ln -s /usr/bin/avconv /usr/bin/ffmpeg
-RUN sudo curl -L https://yt-dl.org/downloads/2016.10.16/youtube-dl -o /usr/local/bin/youtube-dl && chmod a+rx /usr/local/bin/youtube-dl
+RUN sudo curl -L https://yt-dl.org/downloads/2017.02.01/youtube-dl -o /usr/local/bin/youtube-dl && chmod a+rx /usr/local/bin/youtube-dl
 
 RUN curl -fsSL "https://golang.org/dl/go1.5.2.linux-amd64.tar.gz" -o golang.tar.gz \
         && tar -C /usr/local -xzf golang.tar.gz \
