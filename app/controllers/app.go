@@ -2,11 +2,12 @@ package controllers
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/bancek/youtube-to-koofr/app/models"
 	"github.com/koofr/go-koofrclient"
 	"github.com/revel/revel"
 	"golang.org/x/oauth2"
-	"net/http"
 )
 
 type App struct {
@@ -91,7 +92,7 @@ func (c App) Convert(url string) revel.Result {
 }
 
 func (c App) user() *models.User {
-	return c.RenderArgs["user"].(*models.User)
+	return c.ViewArgs["user"].(*models.User)
 }
 
 func (c App) koofr() (*koofrclient.KoofrClient, bool) {
@@ -115,7 +116,7 @@ func setuser(c *revel.Controller) revel.Result {
 		user = models.NewUser()
 		c.Session["uid"] = user.Id
 	}
-	c.RenderArgs["user"] = user
+	c.ViewArgs["user"] = user
 	return nil
 }
 
