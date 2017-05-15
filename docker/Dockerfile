@@ -18,7 +18,7 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
 RUN go get -u github.com/revel/cmd/revel
-RUN go get github.com/bancek/youtube-to-koofr/app
+RUN go get github.com/bancek/youtube-to-koofr/app #1
 RUN cd /go/src/github.com/bancek/youtube-to-koofr/app; go get ./...
 RUN revel build github.com/bancek/youtube-to-koofr /youtube-to-koofr
 
