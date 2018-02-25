@@ -22,6 +22,6 @@ RUN go get github.com/bancek/youtube-to-koofr/app #1
 RUN cd /go/src/github.com/bancek/youtube-to-koofr/app; go get ./...
 RUN revel build github.com/bancek/youtube-to-koofr /youtube-to-koofr
 
-RUN sudo curl -L https://yt-dl.org/downloads/2017.05.14/youtube-dl -o /usr/local/bin/youtube-dl && chmod a+rx /usr/local/bin/youtube-dl
+RUN sudo curl -L https://yt-dl.org/downloads/2018.02.22/youtube-dl -o /usr/local/bin/youtube-dl && chmod a+rx /usr/local/bin/youtube-dl
 
 CMD /youtube-to-koofr/run.sh
