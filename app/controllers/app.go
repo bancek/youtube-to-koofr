@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/bancek/youtube-to-koofr/app/models"
-	"github.com/koofr/go-koofrclient"
+	koofrclient "github.com/koofr/go-koofrclient"
 	"github.com/revel/revel"
 	"golang.org/x/oauth2"
 )
@@ -52,18 +52,29 @@ type ConvertResult struct {
 func (r *ConvertResult) Apply(req *revel.Request, resp *revel.Response) {
 	resp.WriteHeader(http.StatusOK, "text/html; charset=utf-8")
 
-	resp.Out.Write([]byte("<pre><code>\n"))
+	writer := resp.GetWriter()
+	flusher := writer.(http.Flusher)
+
+	for i := 0; i < 4096; i++ {
+		writer.Write([]byte(" "))
+	}
+	flusher.Flush()
+
+	writer.Write([]byte("<pre><code>\n"))
 
 	logger := func(line string) {
-		resp.Out.Write([]byte(line + "\n"))
+		writer.Write([]byte(line))
+		for i := 0; i < 1024; i++ {
+			writer.Write([]byte(" "))
+		}
+		writer.Write([]byte("\n"))
+		flusher.Flush()
 
 		if revel.DevMode {
 			fmt.Println(line)
 		}
 
-		if f, ok := resp.Out.(http.Flusher); ok {
-			f.Flush()
-		}
+		flusher.Flush()
 	}
 
 	shortUrl, err := models.Convert(r.url, r.koofr, logger)

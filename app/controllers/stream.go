@@ -2,13 +2,14 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/bancek/youtube-to-koofr/app/models"
-	"github.com/revel/revel"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path"
+
+	"github.com/bancek/youtube-to-koofr/app/models"
+	"github.com/revel/revel"
 )
 
 type Stream struct {
@@ -55,7 +56,9 @@ func (r *StreamConvertResult) Apply(req *revel.Request, resp *revel.Response) {
 		return
 	}
 
-	_, err = io.Copy(resp.Out, f)
+	writer := resp.GetWriter()
+
+	_, err = io.Copy(writer, f)
 
 	if err != nil {
 		revel.ERROR.Println(err)
