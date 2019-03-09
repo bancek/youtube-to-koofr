@@ -25,4 +25,6 @@ RUN cd /go/src/github.com/bancek/youtube-to-koofr && dep ensure -vendor-only
 RUN go get github.com/revel/cmd/revel && cd /go/src/github.com/revel/cmd && git checkout v0.20.0 && go get github.com/revel/cmd/revel
 RUN cd /go && revel build github.com/bancek/youtube-to-koofr /youtube-to-koofr
 
+RUN sudo curl -L https://yt-dl.org/downloads/2019.03.09/youtube-dl -o /usr/local/bin/youtube-dl && chmod a+rx /usr/local/bin/youtube-dl
+
 CMD /youtube-to-koofr/run.sh
