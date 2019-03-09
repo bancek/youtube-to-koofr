@@ -8,7 +8,7 @@ RUN apt-get install -y python2.7 libav-tools curl libavcodec-extra-53 git
 RUN ln -s /usr/bin/python2.7 /usr/bin/python
 RUN ln -s /usr/bin/avconv /usr/bin/ffmpeg
 
-RUN curl -fsSL "https://golang.org/dl/go1.5.2.linux-amd64.tar.gz" -o golang.tar.gz \
+RUN curl -fsSL "https://dl.google.com/go/go1.12.linux-amd64.tar.gz" -o golang.tar.gz \
         && tar -C /usr/local -xzf golang.tar.gz \
         && rm golang.tar.gz
 
@@ -17,11 +17,12 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
-RUN go get -u github.com/revel/cmd/revel
-RUN go get github.com/bancek/youtube-to-koofr/app #1
-RUN cd /go/src/github.com/bancek/youtube-to-koofr/app; go get ./...
-RUN revel build github.com/bancek/youtube-to-koofr /youtube-to-koofr
+RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
-RUN sudo curl -L https://yt-dl.org/downloads/2018.02.22/youtube-dl -o /usr/local/bin/youtube-dl && chmod a+rx /usr/local/bin/youtube-dl
+RUN mkdir -p /go/src/github.com/bancek/youtube-to-koofr
+COPY . /go/src/github.com/bancek/youtube-to-koofr
+RUN cd /go/src/github.com/bancek/youtube-to-koofr && dep ensure -vendor-only
+RUN go get github.com/revel/cmd/revel && cd /go/src/github.com/revel/cmd && git checkout v0.20.0 && go get github.com/revel/cmd/revel
+RUN cd /go && revel build github.com/bancek/youtube-to-koofr /youtube-to-koofr
 
 CMD /youtube-to-koofr/run.sh
