@@ -1,7 +1,8 @@
 FROM ubuntu:18.04
 
 RUN apt-get update \
-        && apt-get install -y python2.7 ffmpeg curl git
+        && apt-get install -y python2.7 ffmpeg curl git \
+        && ln -s /usr/bin/python2.7 /usr/bin/python
 
 RUN curl -fsSL "https://dl.google.com/go/go1.12.linux-amd64.tar.gz" -o golang.tar.gz \
         && tar -C /usr/local -xzf golang.tar.gz \
