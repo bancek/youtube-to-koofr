@@ -84,9 +84,9 @@ func (r *ConvertResult) Apply(req *revel.Request, resp *revel.Response) {
 		return
 	}
 
-	resp.Out.Write([]byte("</pre></code>\n"))
+	writer.Write([]byte("</pre></code>\n"))
 
-	resp.Out.Write([]byte("<br /><a href=\"" + shortUrl + "\">" + shortUrl + "</a>"))
+	writer.Write([]byte("<br /><a href=\"" + shortUrl + "\">" + shortUrl + "</a>"))
 
 	return
 }
